@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 import { Contact } from 'src/app/shared/models/contact.model';
 import { ContactService } from 'src/app/shared/services/contact-service.service';
@@ -19,19 +20,30 @@ export class AddComponent implements OnInit {
     Photo: null
   };
 
-  constructor(private service : ContactService) { }
+  constructor(private service : ContactService, private toast : ToastrService) { }
 
   ngOnInit() {
   }
 
-  onSubmit(form: NgForm) {
+  onReset(form?: NgForm) {
+    if (form != null)
+      form.resetForm();
+  }
 
+  onSubmit(form: NgForm) {
     const {
       name, 
       contact,
       email,
       photo
-    } = form.value; 
+    } = form.value;
+
+    console.log(this.checkContactAlreadySaved( email ));
+    
+    if ( this.checkContactAlreadySaved( email ) ) {
+      this.toast.error('Contact already saved');
+      return;
+    } 
 
     this.person.Name = name;
     this.person.Email = email;
@@ -39,6 +51,16 @@ export class AddComponent implements OnInit {
     
     this.service.Create( this.person );
 
+    this.toast.success("Contact successfully registered");
+
+  }
+
+  private checkContactAlreadySaved ( email: string ) : boolean {
+    
+    const allContact = this.service.GetAllContact();
+    
+    return allContact.filter(contact => contact.Email === email).length > 0;
+    
   }
 
 }
