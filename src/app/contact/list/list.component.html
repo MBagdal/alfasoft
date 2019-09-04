@@ -1,0 +1,15 @@
+<div class="jumbtron">
+    <h1 class="display-4 text-center">List of My contacts</h1>
+    <hr>
+    <div class="card" style="width: 18rem;" *ngFor="let contact of contacts">
+        <img class="card-img-top" src="{{ contact.Photo }}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title"> {{contact.Name}} </h5>
+            <p class="card-text">{{contact.Contact}}</p>
+            <p class="card-text">{{contact.Email}}</p>
+            <a href="#" class="btn btn-warning" (click)="onUpdate(contact)">Edit</a>
+            <a class="btn btn-danger" (click)="onDelete(contact.Name)">Delete</a>
+        </div>
+    </div>
+</div>
+
