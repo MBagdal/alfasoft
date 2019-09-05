@@ -10,7 +10,7 @@ import { Contact } from 'src/app/shared/models/contact.model';
 })
 export class DetailsComponent implements OnInit {
 
-  contacts : Contact[] = [];
+  contact : Contact;
 
   constructor(private service : ContactService, private route : ActivatedRoute) { 
 
@@ -18,7 +18,7 @@ export class DetailsComponent implements OnInit {
     
     const data = this.service.GetContactById(+id);
 
-    this.contacts = data;
+    this.contact = data[0];
 
   }
 
