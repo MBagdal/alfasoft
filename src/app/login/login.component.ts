@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 
     this.toast.success('Logged');
 
-    this.router.navigate(['/contact/list']);
+    this.router.navigate(['']);
   }
 
   private HasLogged () {
