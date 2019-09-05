@@ -4,6 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Contact } from 'src/app/shared/models/contact.model';
 import { ContactService } from 'src/app/shared/services/contact-service.service';
+import { ActivatedRoute } from '@angular/router';
+import { parse } from 'url';
 
 @Component({
   selector: 'app-add',
@@ -20,7 +22,7 @@ export class AddComponent implements OnInit {
     Photo: null
   };
 
-  constructor(private service : ContactService, private toast : ToastrService) { }
+  constructor(private service : ContactService, private toast : ToastrService, private route : ActivatedRoute) { }
 
   ngOnInit() {
   }
@@ -38,18 +40,17 @@ export class AddComponent implements OnInit {
       photo
     } = form.value;
 
-    if ( !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) ) {
-      this.toast.error('Not is an valid email'); 
-      return;
-    }
-
-    if ( !/^[0-9]{10,11}$/.test(contact) ) {
-      this.toast.error('The contact is invalid');
-      return; 
-    }
+    const id = this.route.snapshot.paramMap.get('id');
     
-    if ( this.checkContactAlreadySaved( email ) ) {
-      this.toast.error('Contact already saved');
+    if(id !== null) {
+      this.person.Name = name;
+      this.person.Email = email;
+      this.person.Contact = contact;
+    
+      if ( this.service.Update( this.person ) ) {
+        this.toast.success("Contact successfully updated");
+      }
+      
       return;
     } 
 
@@ -57,18 +58,8 @@ export class AddComponent implements OnInit {
     this.person.Email = email;
     this.person.Contact = contact;
     
-    this.service.Create( this.person );
-
-    this.toast.success("Contact successfully registered");
-
+    if ( this.service.Create( this.person ) ) {
+      this.toast.success("Contact successfully registered");
+    }
   }
-
-  private checkContactAlreadySaved ( email: string ) : boolean {
-
-    const allContact = this.service.GetAllContact();
-    
-    return allContact.filter(contact => contact.Email === email).length > 0;
-    
-  }
-
 }

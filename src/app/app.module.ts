@@ -34,10 +34,11 @@ import { HeaderComponent } from './header/header.component';
     RouterModule.forRoot([
       { path: '', component: ListComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'contact', component: AppComponent },
+      { path: 'details/:id', component: DetailsComponent },
       { path: 'contact/add', component: AddComponent },
+      { path: 'contact/edit/:id', component: AddComponent },
       { path: 'contact/list', component: ListComponent },
-      { path: 'contact/details', component: DetailsComponent }
+      { path: 'contact/details/:id', component: DetailsComponent }
     ])
   ],
   providers: [ContactService, LoginService],

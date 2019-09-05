@@ -26,10 +26,8 @@ export class ListComponent implements OnInit {
     this.contacts = data;
   }
 
-  onDelete(name : string) {
-    if (confirm('Are you sure to delete this contact?')) {
-      this.service.Delete(name);
-      this.ngOnInit();
-    }
+  onDelete(id : number) {
+    this.service.Delete(id);
+    this.ngOnInit();
   }
 }

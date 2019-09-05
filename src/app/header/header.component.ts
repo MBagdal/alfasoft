@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { LoginService } from '../shared/services/login.service';
 import { Router } from '@angular/router';
 
@@ -7,11 +7,15 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
+@Injectable()
 export class HeaderComponent implements OnInit {
 
   userLogged : boolean = false;
+  button : string = "Add contact"
 
-  constructor(private service : LoginService, private router : Router) {}
+  constructor(private service : LoginService, private router : Router) {
+    
+  }
   
   ngOnInit () {
     const user = JSON.parse(localStorage.getItem('login'));
@@ -20,11 +24,11 @@ export class HeaderComponent implements OnInit {
       this.userLogged = true;
     }
   }
-
-
+  
   Logout () {
     this.service.Logout();
-    this.router.navigate(['/'])
+    this.userLogged = false;
+    this.router.navigate(['']);
   }
 
 }
