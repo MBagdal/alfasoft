@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -10,8 +10,11 @@ import { DetailsComponent } from './contact/details/details.component';
 import { ListComponent } from './contact/list/list.component';
 import { LoginComponent } from './login/login.component';
 import { ContactService } from './shared/services/contact-service.service';
+
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { LoginService } from './shared/services/login.service';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     AddComponent,
     DetailsComponent,
     ListComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
+      { path: '', component: ListComponent },
       { path: 'login', component: LoginComponent },
       { path: 'contact', component: AppComponent },
       { path: 'contact/add', component: AddComponent },
@@ -35,7 +40,8 @@ import { FormsModule } from '@angular/forms';
       { path: 'contact/details', component: DetailsComponent }
     ])
   ],
-  providers: [ContactService],
+  providers: [ContactService, LoginService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {}

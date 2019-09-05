@@ -38,7 +38,15 @@ export class AddComponent implements OnInit {
       photo
     } = form.value;
 
-    console.log(this.checkContactAlreadySaved( email ));
+    if ( !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) ) {
+      this.toast.error('Not is an valid email'); 
+      return;
+    }
+
+    if ( !/^[0-9]{10,11}$/.test(contact) ) {
+      this.toast.error('The contact is invalid');
+      return; 
+    }
     
     if ( this.checkContactAlreadySaved( email ) ) {
       this.toast.error('Contact already saved');
@@ -56,7 +64,7 @@ export class AddComponent implements OnInit {
   }
 
   private checkContactAlreadySaved ( email: string ) : boolean {
-    
+
     const allContact = this.service.GetAllContact();
     
     return allContact.filter(contact => contact.Email === email).length > 0;

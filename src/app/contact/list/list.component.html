@@ -1,15 +1,41 @@
 <div class="jumbtron">
     <h1 class="display-4 text-center">List of My contacts</h1>
     <hr>
-    <div class="card" style="width: 18rem;" *ngFor="let contact of contacts">
+    <!-- <div class="card" style="width: 18rem;" *ngFor="let contact of contacts">
         <img class="card-img-top" src="{{ contact.Photo }}" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title"> {{contact.Name}} </h5>
             <p class="card-text"> {{contact.Contact}} </p>
             <p class="card-text"> {{contact.Email}} </p>
-            <a href="#" class="btn btn-warning" (click)="onUpdate(contact)">Edit</a>
-            <a class="btn btn-danger" (click)="onDelete(contact.Name)">Delete</a>
         </div>
-    </div>
-</div>
+                
+    </div> -->
+
+    <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6" *ngFor="let contact of contacts">
+        
+                    <div class="card hovercard">
+                        <div class="cardheader">
+        
+                        </div>
+                        <div class="avatar">
+                            <img alt="" src="http://lorempixel.com/100/100/people/">
+                        </div>
+                        <div class="info">
+                            <div class="title">
+                                <a target="_blank" href="/details/contact.Id">{{ contact.Name | uppercase}}</a>
+                            </div>
+                            <div class="desc">{{ contact.Email }}</div>
+                            <div class="desc">{{ contact.Contact }}</div>
+                        </div>
+                        <div class="card-footer" *ngIf="userLogged">
+                            <a class="btn btn-outline-warning  justify-content-center" (click)="onUpdate(contact)">Edit</a>
+                            <a class="btn btn-outline-danger justify-content-center" (click)="onDelete(contact.Name)">Delete</a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
 

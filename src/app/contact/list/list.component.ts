@@ -11,12 +11,18 @@ import { Contact } from 'src/app/shared/models/contact.model';
 export class ListComponent implements OnInit {
 
   contacts : Contact[] = []; 
+  userLogged : boolean = false;
 
-  constructor(private service : ContactService) { }
+  constructor(private service : ContactService) { 
+    const userLogged = JSON.parse(localStorage.getItem('login'));
+
+    if (userLogged !== null) {
+      this.userLogged = true;
+    }
+  }
 
   ngOnInit() {
     const data = this.service.GetAllContact();
-    
     this.contacts = data;
   }
 
