@@ -12,13 +12,14 @@ export class LoginService {
             {Email: "marcio@gmail.com", Password: "123"},
         ]
 
-        console.log(allUsers)
-
         const userLogged = allUsers.filter(u => u.Email === user.Email && u.Password === user.Password);
 
-        localStorage.setItem('login', JSON.stringify(userLogged));
+        if ( userLogged.length > 0 ) {
+            localStorage.setItem('login', JSON.stringify(userLogged));
+            return true;
+        }
 
-        return userLogged.length > 0;
+        return false;
     }
 
     Logout () {
